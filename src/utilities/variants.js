@@ -1,0 +1,60 @@
+const base = [
+  { name: "Эспрессо", canAddMilk: false, milkRequired: false },
+  { name: "Американо", canAddMilk: true, milkRequired: false },
+  { name: "Капучино", canAddMilk: true, milkRequired: true },
+  { name: "Латте", canAddMilk: true, milkRequired: true },
+  { name: "Раф", canAddMilk: false, milkRequired: false },
+  { name: "Фильтр", canAddMilk: true, milkRequired: false },
+  { name: "Ред Ай", canAddMilk: true, milkRequired: false },
+  { name: "Натуральный какао", canAddMilk: true, milkRequired: true },
+  { name: "Экспресс какао", canAddMilk: true, milkRequired: true },
+];
+
+const milk = [
+  "Без молока",
+  "Коровье",
+  "Безлактозное",
+  "Кокосовое",
+  "Фисташковое",
+  "Банановое",
+  "Миндальное",
+  "Фундучное",
+];
+
+const syrups = [
+  "Без сиропа",
+  "Шоколад",
+  "Ваниль",
+  "Карамель",
+  "Соленая карамель",
+  "Кокос",
+  "Фисташка",
+  "Миндаль",
+  "Макадамия",
+  "Фундук",
+  "Ириска",
+  "Восточные пряности",
+  "Айриш",
+  "Имбирный пряник",
+  "Попкорн",
+  "Лаванда",
+  "Земляника-клубника",
+  "Манго",
+  "Банан",
+  "Маракуйя",
+  "Ягоды тундры",
+  "Черная смородина",
+  "Цитрусовые соки",
+  "Гренадин",
+  "Мята",
+  "Имбирь",
+  "Бузина",
+  "Блю кюрасао",
+  "Апероль",
+];
+
+export const variants = {
+  base,
+  milk,
+  syrups,
+};
