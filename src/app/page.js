@@ -6,7 +6,7 @@ import GeneratingScreen from "@/components/GeneratingScreen";
 import History from "@/components/History";
 import StartScreen from "@/components/StartScreen";
 import UpdateButton from "@/components/UpdateButton";
-import "./index.css";
+import "@/app/index.css";
 
 export default function Home() {
   return (
