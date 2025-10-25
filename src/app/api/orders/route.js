@@ -29,7 +29,7 @@ export async function POST(request) {
   return Response.json({ message: "Order saved" }, { status: 200 });
 }
 
-export async function UPDATE(request) {
+export async function PATCH(request) {
   const { id, favorite } = await request.json();
   const orders = await getOrders();
   const updatedOrders = orders.map((order) => (order.id === id ? { ...order, favorite } : order));

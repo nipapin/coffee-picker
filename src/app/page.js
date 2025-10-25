@@ -6,7 +6,6 @@ import GeneratingScreen from "@/components/GeneratingScreen";
 import History from "@/components/History";
 import StartScreen from "@/components/StartScreen";
 import "./index.css";
-import { Button } from "@mui/material";
 
 export default function Home() {
   return (

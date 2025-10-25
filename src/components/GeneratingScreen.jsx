@@ -2,12 +2,13 @@
 
 import { useAppState } from "@/hooks/useAppState";
 import { Box, CircularProgress, Drawer, Slide, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Pattern from "./Pattern";
 
 export default function GeneratingScreen() {
   const { isGenerating, setIsGenerating, setIsDone } = useAppState();
   const [progress, setProgress] = useState(0);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     if (!isGenerating) return;
@@ -23,6 +24,8 @@ export default function GeneratingScreen() {
         setProgress(100);
         clearInterval(interval);
         setIsDone(true);
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
         timeout = setTimeout(() => {
           setIsGenerating(false);
           setProgress(0);
@@ -50,6 +53,7 @@ export default function GeneratingScreen() {
       <Box className="generating-screen-progress-wrapper">
         <CircularProgress variant="determinate" value={progress} size={150} thickness={5} />
       </Box>
+      <audio ref={audioRef} src="done.wav" volume={0.5} />
     </Drawer>
   );
 }

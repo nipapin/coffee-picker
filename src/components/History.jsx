@@ -3,9 +3,22 @@
 import useHistory from "@/hooks/useHistory";
 import { Close } from "@mui/icons-material";
 import ListIcon from "@mui/icons-material/List";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, LinearProgress, List, Typography } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  List,
+  ListItem,
+  Skeleton,
+  Typography
+} from "@mui/material";
 import { useCallback } from "react";
 import HistoryItem from "./HistoryItem";
+
+const skeletons = Array.from({ length: 3 }, (_, index) => index);
 
 export default function History() {
   const { history, isLoading, open, setOpen, toggleFavorite, deleteHistoryItem, removeOrders } = useHistory();
@@ -30,8 +43,7 @@ export default function History() {
 
   return (
     <>
-      <Button
-        variant="outlined"
+      <IconButton
         size="small"
         sx={{
           minWidth: 0,
@@ -47,7 +59,7 @@ export default function History() {
         onClick={() => setOpen(true)}
       >
         <ListIcon />
-      </Button>
+      </IconButton>
       <Dialog open={open} onClose={() => setOpen(false)} fullScreen slotProps={{ paper: { elevation: 0 } }}>
         <DialogTitle component="div" sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="h6">История</Typography>
@@ -55,14 +67,36 @@ export default function History() {
             <Close />
           </IconButton>
         </DialogTitle>
-        {open && isLoading && <LinearProgress sx={{ width: "100%" }} />}
         <DialogContent>
           <List>
-            {history.map((item) => {
-              return <HistoryItem key={item.id} item={item} onToggleFavorite={handleToggleFavorite} onDelete={handleDelete} />;
-            })}
+            {isLoading
+              ? skeletons.map((skeleton, index) => {
+                  return (
+                    <ListItem key={index} disablePadding>
+                      <Skeleton
+                        variant="rounded"
+                        height={100}
+                        width="100%"
+                        sx={{ mb: "0.5rem", "&:after": { animationDelay: `${index * 100}ms` } }}
+                        animation="wave"
+                      />
+                    </ListItem>
+                  );
+                })
+              : history.map((item) => {
+                  return (
+                    <HistoryItem
+                      key={item.id}
+                      item={item}
+                      onToggleFavorite={handleToggleFavorite}
+                      onDelete={handleDelete}
+                    />
+                  );
+                })}
+            <ListItem disablePadding>
+              {!isLoading && history.length === 0 && <Typography variant="body1">Пора выпить кофе</Typography>}
+            </ListItem>
           </List>
-          {!isLoading && history.length === 0 && <Typography variant="body1">Пора выпить кофе</Typography>}
         </DialogContent>
         <DialogActions sx={{ pb: "2rem" }}>
           <Button variant="contained" color="primary" onClick={removeAllOrders} fullWidth>

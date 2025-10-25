@@ -11,7 +11,7 @@ export default function useHistory() {
   const toggleFavorite = useCallback((id, favorite) => {
     setIsLoading(true);
     fetch(`/api/orders`, {
-      method: "UPDATE",
+      method: "PATCH",
       body: JSON.stringify({ id, favorite }),
     })
       .then((res) => res.json())

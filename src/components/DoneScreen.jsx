@@ -15,7 +15,12 @@ export default function DoneScreen() {
   };
 
   return (
-    <Dialog open={isDone} onClose={() => setIsDone(false)} fullScreen slotProps={{ paper: { className: "done-screen-paper", elevation: 0 } }}>
+    <Dialog
+      open={isDone}
+      onClose={() => setIsDone(false)}
+      fullScreen
+      slotProps={{ paper: { className: "done-screen-paper", elevation: 0 } }}
+    >
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Typography className="title">Я буду</Typography>
         <IconButton>
@@ -34,8 +39,8 @@ export default function DoneScreen() {
           <Typography className="syrup-title">Сироп{syrup.length > 1 ? "ы" : ""}</Typography>
           <Box className="syrup-chips">
             {syrup.length > 0 ? (
-              syrup.map((syr) => {
-                return <Chip key={syr} label={syr} className="syrup-chip" />;
+              syrup.map((syr, index) => {
+                return <Chip key={`${syr}-${index}`} label={syr} className="syrup-chip" />;
               })
             ) : (
               <Chip label={"Без сиропа"} className="syrup-chip" />
@@ -43,7 +48,14 @@ export default function DoneScreen() {
           </Box>
         </Box>
       </Box>
-      <Button sx={{ mb: "2rem" }} endIcon={<ArrowForward />} fullWidth variant="contained" color="primary" onClick={handleTryAgain}>
+      <Button
+        sx={{ mb: "2rem" }}
+        endIcon={<ArrowForward />}
+        fullWidth
+        variant="contained"
+        color="primary"
+        onClick={handleTryAgain}
+      >
         Попробовать еще раз
       </Button>
     </Dialog>
