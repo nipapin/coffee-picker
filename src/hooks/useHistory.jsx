@@ -1,54 +1,41 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { useEffect } from "react";
+import { deleteOrder, getOrders, updateOrder } from "@/utilities/postgres";
+import { useCallback, useEffect, useState } from "react";
 
 export default function useHistory() {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [open, setOpen] = useState(false);
 
-  const toggleFavorite = useCallback((id, favorite) => {
+  const toggleFavorite = useCallback((order) => {
     setIsLoading(true);
-    fetch(`/api/orders`, {
-      method: "PATCH",
-      body: JSON.stringify({ id, favorite }),
-    })
-      .then((res) => res.json())
-      .then((data) => setHistory(data.message.reverse()))
+    updateOrder(order)
+      .then((data) => setHistory(data))
       .finally(() => setIsLoading(false));
   }, []);
 
-  const deleteHistoryItem = useCallback((id) => {
+  const deleteHistoryItem = useCallback((order) => {
     setIsLoading(true);
-    fetch(`/api/orders`, {
-      method: "DELETE",
-      body: JSON.stringify({ id }),
-    })
-      .then((res) => res.json())
-      .then((data) => setHistory(data.message.reverse()))
+    deleteOrder(order.id)
+      .then((data) => setHistory(data))
       .finally(() => setIsLoading(false));
   }, []);
 
   const removeOrders = useCallback(() => {
     setIsLoading(true);
-    fetch(`/api/orders`, {
-      method: "DELETE",
-      body: JSON.stringify({ id: "all" }),
-    }).then(() => {
-      setHistory([]);
-      setIsLoading(false);
-    });
+    deleteOrder("all")
+      .then((data) => setHistory(data))
+      .finally(() => setIsLoading(false));
   }, []);
 
   useEffect(() => {
     if (!open) return;
     const fetchHistory = async () => {
       setIsLoading(true);
-      const response = await fetch("/api/orders");
-      const data = await response.json();
-      setHistory(data.reverse());
-      setIsLoading(false);
+      getOrders()
+        .then((data) => console.log(data) || setHistory(data))
+        .finally(() => setIsLoading(false));
     };
     fetchHistory();
   }, [open]);

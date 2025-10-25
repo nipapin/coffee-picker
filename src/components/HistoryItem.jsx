@@ -15,11 +15,11 @@ const HistoryItem = memo(({ item, onToggleFavorite, onDelete }) => {
 
   const handleFavorite = () => {
     setFavorite(!favorite);
-    onToggleFavorite(item.id, !favorite);
+    onToggleFavorite({ ...item, favorite: !favorite });
   };
 
   const handleDelete = () => {
-    onDelete(item.id);
+    onDelete(item);
   };
 
   return (
@@ -43,7 +43,7 @@ const HistoryItem = memo(({ item, onToggleFavorite, onDelete }) => {
     >
       <ListItemText
         primary={`[${getHumanReadableDate(item.createdAt)}] ${item.base}`}
-        secondary={[`Молоко: ${item.milk}`, `Сироп: ${item.syrup}`].filter(Boolean).join("\n")}
+        secondary={[`Молоко: ${item.milk}`, `Сироп: ${item.syrup.join(", ") || "Без сиропа"}`].join("\n")}
         slotProps={{ secondary: { sx: { width: "80%", whiteSpace: "pre-line" } } }}
       />
     </ListItem>

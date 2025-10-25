@@ -1,5 +1,12 @@
 import { put } from "@vercel/blob";
 
+const usePut = (data) =>
+  put("orders.json", JSON.stringify(data), {
+    access: "public",
+    allowOverwrite: true,
+    cacheControlMaxAge: 60,
+  });
+
 const getOrders = async () => {
   try {
     const response = await fetch(process.env.STORE_URL);
@@ -33,7 +40,11 @@ export async function PATCH(request) {
   const { id, favorite } = await request.json();
   const orders = await getOrders();
   const updatedOrders = orders.map((order) => (order.id === id ? { ...order, favorite } : order));
-  await put("orders.json", JSON.stringify(updatedOrders), { access: "public", allowOverwrite: true });
+  await put("orders.json", JSON.stringify(updatedOrders), {
+    access: "public",
+    allowOverwrite: true,
+    cacheControlMaxAge: 0,
+  });
   return Response.json({ message: updatedOrders }, { status: 200 });
 }
 

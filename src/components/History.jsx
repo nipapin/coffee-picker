@@ -13,7 +13,7 @@ import {
   List,
   ListItem,
   Skeleton,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useCallback } from "react";
 import HistoryItem from "./HistoryItem";
@@ -24,15 +24,15 @@ export default function History() {
   const { history, isLoading, open, setOpen, toggleFavorite, deleteHistoryItem, removeOrders } = useHistory();
 
   const handleToggleFavorite = useCallback(
-    (id, favorite) => {
-      toggleFavorite(id, favorite);
+    (order) => {
+      toggleFavorite(order);
     },
     [toggleFavorite]
   );
 
   const handleDelete = useCallback(
-    (id) => {
-      deleteHistoryItem(id);
+    (order) => {
+      deleteHistoryItem(order);
     },
     [deleteHistoryItem]
   );

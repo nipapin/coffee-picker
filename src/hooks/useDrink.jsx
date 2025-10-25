@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { variants } from "@/utilities/variants";
+import { createOrder } from "@/utilities/postgres";
 
 const getRandomOption = (options, count) => {
   if (count === undefined) {
@@ -32,9 +33,6 @@ export const useDrinkStore = create((set) => ({
     return { base: base.name, milk, syrup };
   },
   saveOrder: (order) => {
-    fetch("/api/orders", {
-      method: "POST",
-      body: JSON.stringify(order),
-    });
+    createOrder({ ...order, favorite: false });
   },
 }));
