@@ -7,7 +7,6 @@ import Pattern from "./Pattern";
 
 export default function GeneratingScreen() {
   const { isGenerating, setIsGenerating, setIsDone } = useAppState();
-  let timeout = null;
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -16,9 +15,8 @@ export default function GeneratingScreen() {
     const randomInt = (min, max) => {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     };
-
+    let timeout = null;
     const step = randomInt(50, 150);
-
     const interval = setInterval(() => {
       setProgress((prev) => Math.min(prev + Math.random() * 10, 100));
       if (progress === 100) {
@@ -45,7 +43,6 @@ export default function GeneratingScreen() {
       onClose={() => setIsGenerating(false)}
       slotProps={{ paper: { className: "generating-screen-paper", elevation: 0 } }}
     >
-      {/* <Loader /> */}
       <Slide direction="up" in={isGenerating} mountOnEnter unmountOnExit>
         <Typography variant="h6">Генерируем ваш кофе</Typography>
       </Slide>

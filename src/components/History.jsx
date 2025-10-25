@@ -3,12 +3,12 @@
 import useHistory from "@/hooks/useHistory";
 import { Close } from "@mui/icons-material";
 import ListIcon from "@mui/icons-material/List";
-import { Button, Dialog, DialogContent, DialogTitle, IconButton, LinearProgress, List, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, LinearProgress, List, Typography } from "@mui/material";
 import { useCallback } from "react";
 import HistoryItem from "./HistoryItem";
 
 export default function History() {
-  const { history, isLoading, open, setOpen, toggleFavorite, deleteHistoryItem } = useHistory();
+  const { history, isLoading, open, setOpen, toggleFavorite, deleteHistoryItem, removeOrders } = useHistory();
 
   const handleToggleFavorite = useCallback(
     (id, favorite) => {
@@ -23,6 +23,10 @@ export default function History() {
     },
     [deleteHistoryItem]
   );
+
+  const removeAllOrders = useCallback(() => {
+    removeOrders();
+  }, [removeOrders]);
 
   return (
     <>
@@ -60,6 +64,11 @@ export default function History() {
           </List>
           {!isLoading && history.length === 0 && <Typography variant="body1">Пора выпить кофе</Typography>}
         </DialogContent>
+        <DialogActions sx={{ pb: "2rem" }}>
+          <Button variant="contained" color="primary" onClick={removeAllOrders} fullWidth>
+            Удалить все
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   );

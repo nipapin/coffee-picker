@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 
 export default function StartScreen() {
   const { setIsGenerating } = useAppState();
-  const { generateRandomCoffee } = useDrinkStore();
+  const { generateRandomCoffee, saveOrder } = useDrinkStore();
   return (
     <div className="start-screen">
       <Button
@@ -17,7 +17,8 @@ export default function StartScreen() {
         fullWidth
         onClick={() => {
           setIsGenerating(true);
-          generateRandomCoffee();
+          const variant = generateRandomCoffee();
+          saveOrder(variant);
         }}
       >
         Довериться случаю

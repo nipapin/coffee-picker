@@ -3,9 +3,15 @@ import { variants } from "@/utilities/variants";
 
 const getRandomOption = (options, count) => {
   if (count === undefined) {
-    return options.sort(() => Math.random() - 0.5)[0];
+    const index = Math.floor(Math.random() * options.length);
+    return options[index];
   }
-  return options.sort(() => Math.random() - 0.5).slice(0, count);
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    const index = Math.floor(Math.random() * options.length);
+    result.push(options[index]);
+  }
+  return result;
 };
 
 export const useDrinkStore = create((set) => ({
@@ -13,23 +19,22 @@ export const useDrinkStore = create((set) => ({
   base: "",
   syrup: [],
   generateRandomCoffee: () => {
-    const drink = { base: "", milk: "", syrup: "" };
-    const newBase = getRandomOption(variants.base);
-    drink.base = newBase.name;
-    set({ base: newBase.name });
-    if (newBase.canAddMilk) {
-      const newMilk = getRandomOption(variants.milk);
-      drink.milk = newMilk;
-      set({ milk: newMilk });
-    } else {
-      set({ milk: "" });
+    const base = getRandomOption(variants.base);
+    set({ base: base.name });
+    let milk = "";
+    if (base.canAddMilk) {
+      milk = getRandomOption(base.milkRequired ? variants.milk.slice(1) : variants.milk);
     }
+    set({ milk });
     const syrupsCount = Math.floor(Math.random() * 4);
-    const newSyrups = getRandomOption(variants.syrups, syrupsCount);
-    set({ syrup: newSyrups });
-    fetch("/api/history", {
+    const syrup = getRandomOption(variants.syrups, syrupsCount);
+    set({ syrup });
+    return { base: base.name, milk, syrup };
+  },
+  saveOrder: (order) => {
+    fetch("/api/orders", {
       method: "POST",
-      body: JSON.stringify(drink),
+      body: JSON.stringify(order),
     });
   },
 }));

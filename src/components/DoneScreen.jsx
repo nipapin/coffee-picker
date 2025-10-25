@@ -4,7 +4,6 @@ import { useAppState } from "@/hooks/useAppState";
 import { useDrinkStore } from "@/hooks/useDrink";
 import { ArrowForward, FavoriteBorder } from "@mui/icons-material";
 import { Box, Button, Chip, Dialog, Divider, IconButton, Stack, Typography } from "@mui/material";
-import { useEffect } from "react";
 
 export default function DoneScreen() {
   const { isDone, setIsDone, setIsGenerating } = useAppState();
