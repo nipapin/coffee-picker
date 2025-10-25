@@ -3,7 +3,7 @@
 import { neon } from "@neondatabase/serverless";
 
 async function query(query, params) {
-  const sql = neon(`${process.env.DATABASE_URL}`);
+  const sql = neon(`${process.env.STORAGE_POSTGRES_URL}`);
   return await sql.query(query, params);
 }
 
